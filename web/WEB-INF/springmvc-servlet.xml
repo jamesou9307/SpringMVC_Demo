@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--spring使用扫描机制来找到应用程序中所有基于注解的控制器类，需要在配置文件中声明spring-context,
+    在<beans>标签添加： xmlns:context="http://www.springframework.org/schema/context" ,
+    然后应用<context:component-scan base-package="">
+    -->
+    <mvc:annotation-driven/>
+    <!--配置<resources/>,可以指定哪些资源不需要通过dispatcherServlet处理-->
+    <mvc:resources mapping="/*.html" location="/"/>
+    <context:component-scan base-package="com.james.springmvc.controller"/>
     <bean name="/product_input.action" class="com.james.springmvc.controller.InputProductController"/>
     <bean name="/product_save.action" class="com.james.springmvc.controller.SaveProductController"/>
+    <bean id="viewResovler" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
 </beans>
